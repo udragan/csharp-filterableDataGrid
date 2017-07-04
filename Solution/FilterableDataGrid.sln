@@ -5,6 +5,11 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilterableDataGrid", "FilterableDataGrid\FilterableDataGrid.csproj", "{31BBCCE9-7764-4F33-99B3-10A322E94332}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{9899484B-1EE7-4CBA-A5F1-502073132688}"
+	ProjectSection(ProjectDependencies) = postProject
+		{31BBCCE9-7764-4F33-99B3-10A322E94332} = {31BBCCE9-7764-4F33-99B3-10A322E94332}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -15,6 +20,10 @@ Global
 		{31BBCCE9-7764-4F33-99B3-10A322E94332}.Debug|x64.Build.0 = Debug|x64
 		{31BBCCE9-7764-4F33-99B3-10A322E94332}.Release|x64.ActiveCfg = Release|x64
 		{31BBCCE9-7764-4F33-99B3-10A322E94332}.Release|x64.Build.0 = Release|x64
+		{9899484B-1EE7-4CBA-A5F1-502073132688}.Debug|x64.ActiveCfg = Debug|x64
+		{9899484B-1EE7-4CBA-A5F1-502073132688}.Debug|x64.Build.0 = Debug|x64
+		{9899484B-1EE7-4CBA-A5F1-502073132688}.Release|x64.ActiveCfg = Release|x64
+		{9899484B-1EE7-4CBA-A5F1-502073132688}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
