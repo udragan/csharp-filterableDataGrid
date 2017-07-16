@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="FilterableDataGrid.cs" />
     <Compile Include="Infrastructure\ModelCommand.cs" />
+    <Compile Include="Models\FilterableColumn.cs" />
+    <Compile Include="Models\FilterInstruction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -21,7 +21,7 @@
 							</Grid.ColumnDefinitions>
 
 							<!-- Filter control -->
-							<Expander Header="Filter">
+							<Expander Header="Filter" IsExpanded="True"> <!-- TODO: REMOVE IsExpanded -->
 								<Grid>
 									<Grid.RowDefinitions>
 										<RowDefinition Height="Auto" />
@@ -33,9 +33,11 @@
 										<ColumnDefinition />
 									</Grid.ColumnDefinitions>
 
-									<Label Content="SearchTerm:" />
+									<ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FilterableColumns}"
+											  SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FilterInstruction.Column}" DisplayMemberPath="Caption" />
+
 									<TextBox Grid.Row="0" Grid.Column="1"
-											 Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
+											 Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FilterInstruction.Value, UpdateSourceTrigger=PropertyChanged}" /> 
 
 									<Button Grid.Row="0" Grid.Column="2" Content="Exec" Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Execute}" />
 								</Grid>

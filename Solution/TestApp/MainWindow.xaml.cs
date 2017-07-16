@@ -74,6 +74,17 @@ namespace DProject.TestApp
 				SimpleEnumerationValue = SimpleEnum.Second,
 				Link = new Uri("http://www.msn.com", UriKind.Absolute),
 			});
+
+			//for (int i = 3; i < 1000000; i++)
+			//{
+			//	Items.Add(new SourceElement
+			//		{
+			//			Id = i,
+			//			Name = "Name" + i,
+			//			IsValid = i % 2 == 0,
+			//			SimpleEnumerationValue = (SimpleEnum)(i % 3),
+			//		});
+			//}
 		}
 
 		#endregion
