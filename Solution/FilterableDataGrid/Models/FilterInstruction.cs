@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 namespace DProject.Controls.FiterableDataGrid.Models
@@ -16,6 +17,35 @@ namespace DProject.Controls.FiterableDataGrid.Models
 		private object _operation;
 
 		private object _value;
+
+		private IList<FilterableColumn> _filterableColumns;
+
+		#endregion
+
+		#region Constructors
+
+		//TODO: inject both filterableColumns and Operations
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FilterInstruction"/> class.
+		/// </summary>
+		public FilterInstruction()
+		{
+			_filterableColumns = new List<FilterableColumn>
+			{
+				new FilterableColumn
+				{
+					Caption = "Int column",
+					ModelPath = "c1",
+					Type = typeof(int),
+				},
+				new FilterableColumn
+				{
+					Caption = "String column",
+					ModelPath = "c2",
+					Type = typeof(string),
+				},
+			};
+		}
 
 		#endregion
 
@@ -48,7 +78,7 @@ namespace DProject.Controls.FiterableDataGrid.Models
 		}
 
 		/// <summary>
-		/// Gets or sets the value that the operation is applied  to.
+		/// Gets or sets the value that the operation is applied to.
 		/// </summary>
 		public object Value
 		{
@@ -57,6 +87,18 @@ namespace DProject.Controls.FiterableDataGrid.Models
 			{
 				_value = value;
 				NotifyPropertyChanged();
+			}
+		}
+
+		/// <summary>
+		/// Gets the filterable columns.
+		/// </summary>
+		public IList<FilterableColumn> FilterableColumns
+		{
+			get { return _filterableColumns; }
+			private set
+			{
+				_filterableColumns = value;
 			}
 		}
 

@@ -21,25 +21,42 @@
 							</Grid.ColumnDefinitions>
 
 							<!-- Filter control -->
-							<Expander Header="Filter" IsExpanded="True"> <!-- TODO: REMOVE IsExpanded -->
+							<Expander Header="Filter" IsExpanded="True">
+								<!-- TODO: REMOVE IsExpanded -->
 								<Grid>
 									<Grid.RowDefinitions>
 										<RowDefinition Height="Auto" />
 										<RowDefinition Height="Auto" />
 									</Grid.RowDefinitions>
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition />
-										<ColumnDefinition />
+										<ColumnDefinition Width="3*" />
 										<ColumnDefinition />
 									</Grid.ColumnDefinitions>
+									
+									<ItemsControl ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FilterInstructions}">
+										<ItemsControl.ItemTemplate>
+											<!-- FilterInstruction DataTemplate -->
+											<DataTemplate>
+												<Grid>
+													<Grid.RowDefinitions>
+														<RowDefinition />
+													</Grid.RowDefinitions>
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition />
+														<ColumnDefinition />
+														<ColumnDefinition />
+													</Grid.ColumnDefinitions>
+													<ComboBox Grid.Row="0" Grid.Column="1" DisplayMemberPath="Caption"
+															  ItemsSource="{Binding FilterableColumns}"
+															  SelectedItem="{Binding Column}" />
 
-									<ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FilterableColumns}"
-											  SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FilterInstruction.Column}" DisplayMemberPath="Caption" />
-
-									<TextBox Grid.Row="0" Grid.Column="1"
-											 Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FilterInstruction.Value, UpdateSourceTrigger=PropertyChanged}" /> 
-
-									<Button Grid.Row="0" Grid.Column="2" Content="Exec" Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Execute}" />
+													<TextBox Grid.Row="0" Grid.Column="3" Text="{Binding Value}" />
+												</Grid>
+											</DataTemplate>
+										</ItemsControl.ItemTemplate>
+									</ItemsControl>
+									
+									<Button Grid.Row="0" Grid.Column="1" Content="Exec" Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Execute}" />
 								</Grid>
 							</Expander>
 

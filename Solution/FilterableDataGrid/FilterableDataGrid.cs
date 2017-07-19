@@ -26,11 +26,10 @@ namespace DProject.Controls.FiterableDataGrid
 
 		private ICommand _execute;
 
-		private string _searchTerm;																						//will become obsolete
 		private DataGrid _dataGrid;
 		private IList<FilterableColumn> _filterableColumns;																//reflected columns of dataGrid
 		private IList<PropertyInfo> _modelProperties;																	//available bound properties of underlying model
-		private FilterInstruction _searchInsturction;																	//create a list of instructions
+		private IList<FilterInstruction> _filterInstructions;															//filter instructions to be applied to Source
 		private ICollectionView _sourcePresenter;
 
 		#endregion
@@ -92,25 +91,15 @@ namespace DProject.Controls.FiterableDataGrid
 			SetCurrentValue(SourceProperty, new ArrayList());
 			SetCurrentValue(ColumnsProperty, new ObservableCollection<DataGridColumn>());
 
-			FilterInstruction = new FilterInstruction();
+			FilterInstructions = new List<FilterInstruction>
+			{
+				new FilterInstruction(),
+			};
 		}
 
 		#endregion
 
 		#region Properties
-
-		/// <summary>
-		/// Gets or sets the search term.
-		/// </summary>
-		[Obsolete]
-		public string SearchTerm
-		{
-			get { return _searchTerm; }
-			set
-			{
-				_searchTerm = value;
-			}
-		}
 
 		/// <summary>
 		/// Gets the underlying data grid.
@@ -137,15 +126,14 @@ namespace DProject.Controls.FiterableDataGrid
 		}
 
 		/// <summary>
-		/// Gets or sets the filter instruction.
+		/// Gets the filter instructions.
 		/// </summary>
-		public FilterInstruction FilterInstruction
+		public IList<FilterInstruction> FilterInstructions
 		{
-			get { return _searchInsturction; }
-			set
+			get { return _filterInstructions; }
+			private set
 			{
-				_searchInsturction = value;
-				NotifyPropertyChanged();
+				_filterInstructions = value;
 			}
 		}
 
@@ -156,12 +144,7 @@ namespace DProject.Controls.FiterableDataGrid
 		{
 			get
 			{
-				if (_execute == null)
-				{
-					_execute = new ModelCommand(x => _sourcePresenter.Refresh(), x => _sourcePresenter != null);
-				}
-
-				return _execute;
+				return _execute ?? (_execute = new ModelCommand(x => _sourcePresenter.Refresh(), x => _sourcePresenter != null));
 			}
 		}
 
@@ -259,21 +242,22 @@ namespace DProject.Controls.FiterableDataGrid
 		//TODO: incorporate filter predicates! currently searching only against string columns as PoC.
 		private bool CollectionFilterPredicate(object obj)
 		{
-			if (_searchInsturction != null &&
-				_searchInsturction.Column != null &&
-				_searchInsturction.Column.ModelPath != null)
-			{
-				//TODO: get property info for nested objects, extract to handler
-				PropertyInfo property = obj.GetType().GetProperty(_searchInsturction.Column.ModelPath.ToString());
-				object value = property.GetValue(obj);
+			//if (_filterInstruction != null &&
+			//	_filterInstruction.Column != null &&
+			//	_filterInstruction.Column.ModelPath != null)
+			//{
+			//	//TODO: get property info for nested objects, extract to handler
+			//	PropertyInfo property = obj.GetType().GetProperty(_filterInstruction.Column.ModelPath.ToString());
+			//	object value = property.GetValue(obj);
 
-				if (value.ToString().Contains(_searchInsturction.Value.ToString()))
-				{
-					return true;
-				}
 
-				return false;
-			}
+			//	if (value.ToString().Contains(_filterInstruction.Value.ToString()))
+			//	{
+			//		return true;
+			//	}
+
+			//	return false;
+			//}
 
 			return true;
 		}
