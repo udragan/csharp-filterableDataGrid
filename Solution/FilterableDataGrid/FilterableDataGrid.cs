@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -28,8 +29,8 @@ namespace DProject.Controls.FiterableDataGrid
 
 		private DataGrid _dataGrid;
 		private IList<FilterableColumn> _filterableColumns;																//reflected columns of dataGrid
-		private IList<PropertyInfo> _modelProperties;																	//available bound properties of underlying model
-		private IList<FilterInstruction> _filterInstructions;															//filter instructions to be applied to Source
+		private IDictionary<string, PropertyInfo> _modelProperties;														//available bound properties of underlying model
+		private IList<FilterCondition> _filterConditions;																//filter conditions to be applied to Source
 		private ICollectionView _sourcePresenter;
 
 		#endregion
@@ -91,10 +92,11 @@ namespace DProject.Controls.FiterableDataGrid
 			SetCurrentValue(SourceProperty, new ArrayList());
 			SetCurrentValue(ColumnsProperty, new ObservableCollection<DataGridColumn>());
 
-			FilterInstructions = new List<FilterInstruction>
-			{
-				new FilterInstruction(),
-			};
+			//TODO: convert to MEF loaded operations for extensibility.
+			//FilterConditions = new List<FilterCondition>
+			//{
+			//	new FilterCondition(),
+			//};
 		}
 
 		#endregion
@@ -119,7 +121,7 @@ namespace DProject.Controls.FiterableDataGrid
 		public IList<FilterableColumn> FilterableColumns
 		{
 			get { return _filterableColumns; }
-			set
+			private set
 			{
 				_filterableColumns = value;
 			}
@@ -128,12 +130,13 @@ namespace DProject.Controls.FiterableDataGrid
 		/// <summary>
 		/// Gets the filter instructions.
 		/// </summary>
-		public IList<FilterInstruction> FilterInstructions
+		public IList<FilterCondition> FilterConditions
 		{
-			get { return _filterInstructions; }
+			get { return _filterConditions; }
 			private set
 			{
-				_filterInstructions = value;
+				_filterConditions = value;
+				NotifyPropertyChanged();
 			}
 		}
 
@@ -169,7 +172,24 @@ namespace DProject.Controls.FiterableDataGrid
 			if (filterableDataGrid.Source is IEnumerable &&
 				filterableDataGrid.Source.GetType().GetGenericArguments().Length > 0)
 			{
-				filterableDataGrid._modelProperties = filterableDataGrid.Source.GetType().GetGenericArguments()[0].GetProperties();
+				filterableDataGrid._modelProperties = filterableDataGrid.Source.GetType().GetGenericArguments()[0].GetProperties()
+					.ToDictionary<PropertyInfo, string>(x => x.Name);
+			}
+
+			//TODO: think about this!
+			if (filterableDataGrid.Columns != null &&
+				filterableDataGrid.Columns.Count > 0)
+			{
+				foreach (FilterableColumn filterableColumn in filterableDataGrid._filterableColumns)
+				{
+					filterableColumn.Type = filterableDataGrid._modelProperties[filterableColumn.ModelPath].PropertyType;
+				}
+
+				filterableDataGrid.FilterConditions = new List<FilterCondition>
+				{
+					new FilterCondition(filterableDataGrid._filterableColumns),
+				};
+
 			}
 		}
 
@@ -213,6 +233,7 @@ namespace DProject.Controls.FiterableDataGrid
 			{
 				string header = dgc.Header.ToString();
 				string path = string.Empty;
+				Type type = null;
 
 				if (dgc is DataGridTextColumn)
 				{
@@ -235,29 +256,18 @@ namespace DProject.Controls.FiterableDataGrid
 					path = t.Path.Path;
 				}
 
-				FilterableColumns.Add(new FilterableColumn { Caption = header, ModelPath = path });
+				FilterableColumns.Add(new FilterableColumn { Caption = header, ModelPath = path, Type = type });
 			}
 		}
 
-		//TODO: incorporate filter predicates! currently searching only against string columns as PoC.
+		//TODO: incorporate filter predicates!
 		private bool CollectionFilterPredicate(object obj)
 		{
-			//if (_filterInstruction != null &&
-			//	_filterInstruction.Column != null &&
-			//	_filterInstruction.Column.ModelPath != null)
-			//{
-			//	//TODO: get property info for nested objects, extract to handler
-			//	PropertyInfo property = obj.GetType().GetProperty(_filterInstruction.Column.ModelPath.ToString());
-			//	object value = property.GetValue(obj);
-
-
-			//	if (value.ToString().Contains(_filterInstruction.Value.ToString()))
-			//	{
-			//		return true;
-			//	}
-
-			//	return false;
-			//}
+			if (_filterConditions != null &&
+				_filterConditions.All(x => x.Operation != null))
+			{
+				return _filterConditions.All(x => x.ExecuteCondition(obj));
+			}
 
 			return true;
 		}

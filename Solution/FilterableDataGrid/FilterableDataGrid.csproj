@@ -50,7 +50,10 @@
     <Compile Include="FilterableDataGrid.cs" />
     <Compile Include="Infrastructure\ModelCommand.cs" />
     <Compile Include="Models\FilterableColumn.cs" />
-    <Compile Include="Models\FilterInstruction.cs" />
+    <Compile Include="Models\FilterCondition.cs" />
+    <Compile Include="Operations\IsNumberOperation.cs" />
+    <Compile Include="Operations\NumberOperation.cs" />
+    <Compile Include="Operations\Operation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -32,10 +32,10 @@
 										<ColumnDefinition Width="3*" />
 										<ColumnDefinition />
 									</Grid.ColumnDefinitions>
-									
-									<ItemsControl ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FilterInstructions}">
+
+									<ItemsControl ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FilterConditions}">
 										<ItemsControl.ItemTemplate>
-											<!-- FilterInstruction DataTemplate -->
+											<!-- FilterCondition DataTemplate -->
 											<DataTemplate>
 												<Grid>
 													<Grid.RowDefinitions>
@@ -45,17 +45,22 @@
 														<ColumnDefinition />
 														<ColumnDefinition />
 														<ColumnDefinition />
+														<ColumnDefinition />
 													</Grid.ColumnDefinitions>
 													<ComboBox Grid.Row="0" Grid.Column="1" DisplayMemberPath="Caption"
 															  ItemsSource="{Binding FilterableColumns}"
 															  SelectedItem="{Binding Column}" />
+
+													<ComboBox Grid.Row="0" Grid.Column="2" DisplayMemberPath="DisplayText"
+															  ItemsSource="{Binding ColumnOperations}"
+															  SelectedItem="{Binding Operation}" />
 
 													<TextBox Grid.Row="0" Grid.Column="3" Text="{Binding Value}" />
 												</Grid>
 											</DataTemplate>
 										</ItemsControl.ItemTemplate>
 									</ItemsControl>
-									
+
 									<Button Grid.Row="0" Grid.Column="1" Content="Exec" Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Execute}" />
 								</Grid>
 							</Expander>

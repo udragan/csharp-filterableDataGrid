@@ -22,7 +22,7 @@ namespace DProject.Controls.FiterableDataGrid.Models
 		/// <summary>
 		/// Gets or sets the model path.
 		/// </summary>
-		public object ModelPath { get; set; }
+		public string ModelPath { get; set; }
 
 		#endregion
 	}
