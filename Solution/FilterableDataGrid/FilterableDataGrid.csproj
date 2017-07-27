@@ -7,7 +7,7 @@
     <ProjectGuid>{31BBCCE9-7764-4F33-99B3-10A322E94332}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DProject.Controls.FiterableDataGrid</RootNamespace>
+    <RootNamespace>DProject.Controls.FilterableDataGrid</RootNamespace>
     <AssemblyName>FilterableDataGrid</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

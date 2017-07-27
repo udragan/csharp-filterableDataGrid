@@ -11,10 +11,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using DProject.Controls.FiterableDataGrid.Infrastructure;
-using DProject.Controls.FiterableDataGrid.Models;
+using DProject.Controls.FilterableDataGrid.Infrastructure;
+using DProject.Controls.FilterableDataGrid.Models;
 
-namespace DProject.Controls.FiterableDataGrid
+namespace DProject.Controls.FilterableDataGrid
 {
 	/// <summary>
 	/// DataGrid inspired custom control with generic filtering capability.

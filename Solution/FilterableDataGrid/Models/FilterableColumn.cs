@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DProject.Controls.FiterableDataGrid.Models
+namespace DProject.Controls.FilterableDataGrid.Models
 {
 	/// <summary>
 	/// Model representation of a datagrid column available for filtering.

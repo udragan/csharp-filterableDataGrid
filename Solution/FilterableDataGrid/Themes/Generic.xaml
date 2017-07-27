@@ -1,7 +1,7 @@
-﻿<ResourceDictionary x:Class="DProject.Controls.FiterableDataGrid.Themes.Generic"
+﻿<ResourceDictionary x:Class="DProject.Controls.FilterableDataGrid.Themes.Generic"
 					xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					xmlns:local="clr-namespace:DProject.Controls.FiterableDataGrid">
+					xmlns:local="clr-namespace:DProject.Controls.FilterableDataGrid">
 
 	<!--  FilterableDataGrid style  -->
 	<Style TargetType="{x:Type local:FilterableDataGrid}" >

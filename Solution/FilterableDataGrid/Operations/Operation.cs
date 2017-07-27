@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DProject.Controls.FiterableDataGrid.Operations
+namespace DProject.Controls.FilterableDataGrid.Operations
 {
 	/// <summary>
 	/// Abstract class representing base filter operation.

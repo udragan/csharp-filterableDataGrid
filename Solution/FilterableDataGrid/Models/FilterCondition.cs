@@ -5,8 +5,8 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
-using DProject.Controls.FiterableDataGrid.Operations;
-namespace DProject.Controls.FiterableDataGrid.Models
+using DProject.Controls.FilterableDataGrid.Operations;
+namespace DProject.Controls.FilterableDataGrid.Models
 {
 	/// <summary>
 	/// Model representation of filter predicate containing column, operation and value to filter against.

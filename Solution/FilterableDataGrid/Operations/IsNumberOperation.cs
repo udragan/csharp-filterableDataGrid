@@ -1,9 +1,9 @@
-﻿namespace DProject.Controls.FiterableDataGrid.Operations
+﻿namespace DProject.Controls.FilterableDataGrid.Operations
 {
 	/// <summary>
 	/// Specialisation of number operation checking for equality.
 	/// </summary>
-	/// <seealso cref="DProject.Controls.FiterableDataGrid.Operations.NumberOperation" />
+	/// <seealso cref="DProject.Controls.FilterableDataGrid.Operations.NumberOperation" />
 	public class IsNumberOperation : NumberOperation
 	{
 		#region Constructors

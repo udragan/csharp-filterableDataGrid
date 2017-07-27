@@ -2,7 +2,7 @@
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
-		xmlns:fdg="clr-namespace:DProject.Controls.FiterableDataGrid;assembly=FilterableDataGrid"
+		xmlns:fdg="clr-namespace:DProject.Controls.FilterableDataGrid;assembly=FilterableDataGrid"
 		xmlns:enums="clr-namespace:DProject.TestApp.Enumerations"
 		Title="MainWindow" Height="350" Width="525">
 	

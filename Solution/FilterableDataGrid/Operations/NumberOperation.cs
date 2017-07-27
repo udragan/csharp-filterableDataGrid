@@ -1,9 +1,9 @@
-﻿namespace DProject.Controls.FiterableDataGrid.Operations
+﻿namespace DProject.Controls.FilterableDataGrid.Operations
 {
 	/// <summary>
 	/// Abastract class representing operations with numbers.
 	/// </summary>
-	/// <seealso cref="DProject.Controls.FiterableDataGrid.Operations.Operation" />
+	/// <seealso cref="DProject.Controls.FilterableDataGrid.Operations.Operation" />
 	public abstract class NumberOperation : Operation
 	{
 		#region Constructors

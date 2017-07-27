@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace DProject.Controls.FiterableDataGrid.Infrastructure
+namespace DProject.Controls.FilterableDataGrid.Infrastructure
 {
 	/// <summary>
 	/// Implementation of <see cref="ICommand"/> to be used as base command.
