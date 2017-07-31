@@ -182,7 +182,7 @@ namespace DProject.Controls.FilterableDataGrid
 			{
 				foreach (FilterableColumn filterableColumn in filterableDataGrid._filterableColumns)
 				{
-					filterableColumn.Type = filterableDataGrid._modelProperties[filterableColumn.ModelPath].PropertyType;
+					filterableColumn.TargetType = filterableDataGrid._modelProperties[filterableColumn.ModelPath].PropertyType;
 				}
 
 				filterableDataGrid.FilterConditions = new List<FilterCondition>
@@ -256,7 +256,7 @@ namespace DProject.Controls.FilterableDataGrid
 					path = t.Path.Path;
 				}
 
-				FilterableColumns.Add(new FilterableColumn { Caption = header, ModelPath = path, Type = type });
+				FilterableColumns.Add(new FilterableColumn { Caption = header, ModelPath = path, TargetType = type });
 			}
 		}
 

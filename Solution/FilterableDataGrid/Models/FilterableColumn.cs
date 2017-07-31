@@ -10,9 +10,9 @@ namespace DProject.Controls.FilterableDataGrid.Models
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets the type.
+		/// Gets or sets the type of bound property.
 		/// </summary>
-		public Type Type { get; set; }
+		public Type TargetType { get; set; }
 
 		/// <summary>
 		/// Gets or sets the caption.

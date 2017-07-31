@@ -154,7 +154,7 @@ namespace DProject.Controls.FilterableDataGrid.Models
 
 				if (operation != null)
 				{
-					return operation.AppliesTo == Column.Type;
+					return operation.AppliesTo == Column.TargetType;
 				}
 			}
 
