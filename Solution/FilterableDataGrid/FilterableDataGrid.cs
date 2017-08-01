@@ -263,10 +263,10 @@ namespace DProject.Controls.FilterableDataGrid
 		//TODO: incorporate filter predicates!
 		private bool CollectionFilterPredicate(object obj)
 		{
-			if (_filterConditions != null &&
-				_filterConditions.All(x => x.Operation != null))
+			if (_filterConditions != null)
 			{
-				return _filterConditions.All(x => x.ExecuteCondition(obj));
+				return _filterConditions.Where(x => x.IsValid())
+										.All(x => x.ExecuteCondition(obj));
 			}
 
 			return true;

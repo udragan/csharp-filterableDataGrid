@@ -18,12 +18,20 @@ namespace DProject.Controls.FilterableDataGrid.Operations
 		public Type AppliesTo { get; protected set; }																	//TODO: should be a list of similar types (int, long, decimal....)
 
 		/// <summary>
+		/// Determines whether the operation is applicable on the specified value.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>
+		/// <c>true</c> if operation is applicable to the specified value; otherwise, <c>false</c>.
+		/// </returns>
+		public abstract bool IsApplicable(object value);
+		/// <summary>
 		/// Executes the operation on provided values.
 		/// </summary>
 		/// <param name="dgValue">The value from data grid column.</param>
 		/// <param name="conditionValue">The value from filter condition.</param>
 		/// <returns>
-		/// True if provided values satisfy the predicate, false otherwise.
+		/// <c>true</c> if provided values satisfy the predicate; otherwise, <c>false</c>.
 		/// </returns>
 		public abstract bool Execute(object dgValue, object conditionValue);
 	}

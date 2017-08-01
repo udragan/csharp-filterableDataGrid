@@ -26,14 +26,14 @@
 		/// <param name="dgValue">The value from data grid column.</param>
 		/// <param name="conditionValue">The value from filter condition.</param>
 		/// <returns>
-		/// True if provided values satisfy the predicate, false otherwise.
+		/// <c>true</c> if provided values satisfy the predicate, otherwise <c>false</c>.
 		/// </returns>
 		public override bool Execute(object dgValue, object conditionValue)
 		{
-			int dgInt = int.Parse(dgValue.ToString());
-			int conditionInt = int.Parse(conditionValue.ToString());
+			long dgInt = long.Parse(dgValue.ToString());
+			long conditionInt = long.Parse(conditionValue.ToString());
 
-			return int.Equals(dgInt, conditionInt);
+			return long.Equals(dgInt, conditionInt);
 		}
 
 		#endregion

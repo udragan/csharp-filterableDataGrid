@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
@@ -119,27 +118,38 @@ namespace DProject.Controls.FilterableDataGrid.Models
 		#region Public methods
 
 		/// <summary>
+		/// Checks weather this instance is valid.
+		/// </summary>
+		/// <returns>
+		///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.
+		/// </returns>
+		public bool IsValid()
+		{
+			if (_column != null &&
+				_operation != null &&
+				_value != null)
+			{
+				return _operation.IsApplicable(_value);
+			}
+
+			return false;
+		}
+
+		/// <summary>
 		/// Executes the condition against provided value.
 		/// </summary>
 		/// <param name="dataGridValue">The data grid value.</param>
-		/// <returns>True if condition is satisfied or condition is not valid, false otherwise.</returns>
+		/// <returns><c>true</c> if condition is satisfied or condition is not valid; otherwise <c>false</c>.</returns>
 		/// <exception cref="System.ArgumentNullException">dataGridValue</exception>
 		public bool ExecuteCondition(object dataGridValue)
 		{
 			if (dataGridValue == null)
 				throw new ArgumentNullException("dataGridValue");
 
-			if (_column != null &&
-				_operation != null &&
-				_value != null)
-			{
-				PropertyInfo property = dataGridValue.GetType().GetProperty(_column.ModelPath);
-				object value = property.GetValue(dataGridValue);
+			PropertyInfo property = dataGridValue.GetType().GetProperty(_column.ModelPath);
+			object value = property.GetValue(dataGridValue);
 
-				return _operation.Execute(value, Value);
-			}
-
-			return true;
+			return _operation.Execute(value, Value);
 		}
 
 		#endregion

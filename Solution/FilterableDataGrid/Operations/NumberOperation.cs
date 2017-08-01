@@ -17,5 +17,22 @@
 		}
 
 		#endregion
+
+		#region Overrides
+
+		/// <summary>
+		/// Determines whether the operation is applicable to the specified value.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>
+		/// <c>true</c> if operation is applicable to the specified value; otherwise, <c>false</c>.
+		/// </returns>
+		public override bool IsApplicable(object value)
+		{
+			long result;
+			return long.TryParse(value.ToString(), out result);
+		}
+
+		#endregion
 	}
 }
