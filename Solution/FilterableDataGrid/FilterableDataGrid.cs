@@ -29,9 +29,11 @@ namespace DProject.Controls.FilterableDataGrid
 
 		private DataGrid _dataGrid;
 		private IList<FilterableColumn> _filterableColumns;																//reflected columns of dataGrid
-		private IDictionary<string, PropertyInfo> _modelProperties;														//available bound properties of underlying model
-		private IList<FilterCondition> _filterConditions;																//filter conditions to be applied to Source
+		//private IDictionary<string, PropertyInfo> _modelProperties;														//available bound properties of underlying model
+		//private IList<FilterCondition> _filterConditions;																//filter conditions to be applied to Source
 		private ICollectionView _sourcePresenter;
+
+		private ControlParts.FilterConditionsControl _filterConditionsControl;
 
 		#endregion
 
@@ -46,7 +48,7 @@ namespace DProject.Controls.FilterableDataGrid
 			set { SetValue(SourceProperty, value); }
 		}
 		/// <summary>
-		/// The control source dependency property
+		/// The control source dependency property.
 		/// </summary>
 		public static readonly DependencyProperty SourceProperty =
 			DependencyProperty.Register("Source", typeof(IEnumerable), typeof(FilterableDataGrid), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, SourcePropertyChanged));
@@ -60,7 +62,7 @@ namespace DProject.Controls.FilterableDataGrid
 			set { SetValue(ColumnsProperty, value); }
 		}
 		/// <summary>
-		/// The datagrid columns dependency property
+		/// The datagrid columns dependency property.
 		/// </summary>
 		public static readonly DependencyProperty ColumnsProperty =
 			DependencyProperty.Register("Columns", typeof(ObservableCollection<DataGridColumn>), typeof(FilterableDataGrid), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, ColumnsPropertyChanged));
@@ -88,6 +90,8 @@ namespace DProject.Controls.FilterableDataGrid
 			DataGrid.CanUserAddRows = false;
 			DataGrid.CanUserDeleteRows = false;
 			DataGrid.CanUserResizeRows = false;
+
+			FilterConditionsControl = new ControlParts.FilterConditionsControl();
 
 			SetCurrentValue(SourceProperty, new ArrayList());
 			SetCurrentValue(ColumnsProperty, new ObservableCollection<DataGridColumn>());
@@ -128,15 +132,14 @@ namespace DProject.Controls.FilterableDataGrid
 		}
 
 		/// <summary>
-		/// Gets the filter instructions.
+		/// Gets the filter conditions control.
 		/// </summary>
-		public IList<FilterCondition> FilterConditions
+		public ControlParts.FilterConditionsControl FilterConditionsControl
 		{
-			get { return _filterConditions; }
+			get { return _filterConditionsControl; }
 			private set
 			{
-				_filterConditions = value;
-				NotifyPropertyChanged();
+				_filterConditionsControl = value;
 			}
 		}
 
@@ -161,6 +164,8 @@ namespace DProject.Controls.FilterableDataGrid
 
 			if (filterableDataGrid.Source == null)
 			{
+				filterableDataGrid.FilterConditionsControl.FilterConditions.Clear();
+				filterableDataGrid.FilterConditionsControl.SourceModelProperties.Clear();
 				return;
 			}
 
@@ -170,27 +175,32 @@ namespace DProject.Controls.FilterableDataGrid
 
 			//TODO: what to do in case of nonGeneric lists??
 			if (filterableDataGrid.Source is IEnumerable &&
-				filterableDataGrid.Source.GetType().GetGenericArguments().Length > 0)
+				filterableDataGrid.Source.GetType().GetGenericArguments().Any())
 			{
-				filterableDataGrid._modelProperties = filterableDataGrid.Source.GetType().GetGenericArguments()[0].GetProperties()
-					.ToDictionary<PropertyInfo, string>(x => x.Name);
+				filterableDataGrid._filterConditionsControl.SourceModelProperties = filterableDataGrid.Source.GetType()
+																											 .GetGenericArguments()
+																											 .First()
+																											 .GetProperties()
+																											 .ToDictionary<PropertyInfo, string>(x => x.Name);
 			}
+
+			//TODO: populate filterableColumns in FilterConditionsControl!
 
 			//TODO: think about this!
-			if (filterableDataGrid.Columns != null &&
-				filterableDataGrid.Columns.Count > 0)
-			{
-				foreach (FilterableColumn filterableColumn in filterableDataGrid._filterableColumns)
-				{
-					filterableColumn.TargetType = filterableDataGrid._modelProperties[filterableColumn.ModelPath].PropertyType;
-				}
+			//if (filterableDataGrid.Columns != null &&
+			//	filterableDataGrid.Columns.Count > 0)
+			//{
+			//	foreach (FilterableColumn filterableColumn in filterableDataGrid._filterableColumns)
+			//	{
+			//		filterableColumn.TargetType = filterableDataGrid._modelProperties[filterableColumn.ModelPath].PropertyType;
+			//	}
 
-				filterableDataGrid.FilterConditions = new List<FilterCondition>
-				{
-					new FilterCondition(filterableDataGrid._filterableColumns),
-				};
+			//	//filterableDataGrid.FilterConditions = new List<FilterCondition>
+			//	//{
+			//	//	new FilterCondition(filterableDataGrid._filterableColumns),
+			//	//};
 
-			}
+			//}
 		}
 
 		private static void ColumnsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -263,11 +273,11 @@ namespace DProject.Controls.FilterableDataGrid
 		//TODO: incorporate filter predicates!
 		private bool CollectionFilterPredicate(object obj)
 		{
-			if (_filterConditions != null)
-			{
-				return _filterConditions.Where(x => x.IsValid())
-										.All(x => x.ExecuteCondition(obj));
-			}
+			//if (_filterConditions != null)
+			//{
+			//	return _filterConditions.Where(x => x.IsValid())
+			//							.All(x => x.ExecuteCondition(obj));
+			//}
 
 			return true;
 		}
